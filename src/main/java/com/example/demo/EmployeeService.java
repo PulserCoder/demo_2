@@ -3,7 +3,10 @@ package com.example.demo;
 import com.example.demo.exceptions.EmployeeAlreadyAddedException;
 import com.example.demo.exceptions.EmployeeNotFoundException;
 import com.example.demo.exceptions.EmployeeStorageIsFullException;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -103,6 +106,12 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployees() {
         return employees;
+    }
+
+    static void validateName(String name) {
+        if (StringUtils.isBlank(name) || !StringUtils.isAlpha(name)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid name: " + name);
+        }
     }
 }
 

@@ -1,13 +1,10 @@
 package com.example.demo;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,18 +22,24 @@ public class EmployeeController {
                                 @RequestParam("lastName") String lastName,
                                 @RequestParam("salary") int salary,
                                 @RequestParam("departmentId") int department) {
+        EmployeeService.validateName(firstName);
+        EmployeeService.validateName(lastName);
         return employeeService.addEmployee(firstName, lastName, salary, department);
     }
 
     @GetMapping(path = "remove")
     public Optional<Employee> removeEmployee(@RequestParam("firstName") String firstName,
                                              @RequestParam("lastName") String lastName) {
+        EmployeeService.validateName(firstName);
+        EmployeeService.validateName(lastName);
         return employeeService.deleteEmployee(firstName + " " + lastName);
     }
 
     @GetMapping(path = "find")
     public Employee findEmployee(@RequestParam("firstName") String firstName,
                                  @RequestParam("lastName") String lastName) {
+        EmployeeService.validateName(firstName);
+        EmployeeService.validateName(lastName);
         return employeeService.getEmployeeByFullName(firstName + " " + lastName);
     }
 
@@ -56,8 +59,7 @@ public class EmployeeController {
             return employeeService.getAllEmployeesByDepartment(department);
         } else {
             return employeeService.getAllEmployees().stream()
-                    .collect(Collectors.groupingBy(e -> e.getDepartment()));
+                    .collect(Collectors.groupingBy(Employee::getDepartment));
         }
     }
-
 }
