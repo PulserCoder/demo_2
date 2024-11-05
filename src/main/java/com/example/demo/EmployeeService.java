@@ -79,7 +79,7 @@ public class EmployeeService {
             getEmployeeByFullName(firstName + " " + lastName);
             throw new EmployeeAlreadyAddedException("Такой сотрудник уже добавлен");
         } catch (EmployeeNotFoundException e) {
-            Employee newEmployee = new Employee(firstName, lastName, salary, department);
+            Employee newEmployee = new Employee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, department);
             employees.add(newEmployee);
             return newEmployee;
         }
