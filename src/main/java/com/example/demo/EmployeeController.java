@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,8 +11,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "employee")
+@RequestMapping(path = "/employee")
 public class EmployeeController {
+    private static final Log log = LogFactory.getLog(EmployeeController.class);
     private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
@@ -41,25 +44,5 @@ public class EmployeeController {
         EmployeeService.validateName(firstName);
         EmployeeService.validateName(lastName);
         return employeeService.getEmployeeByFullName(firstName + " " + lastName);
-    }
-
-    @GetMapping(path = "/departments/max-salary")
-    public Employee findEmployeeWithMaximalSalaryByDepartment(@RequestParam("departmentId") int department) {
-        return employeeService.findMaximalSalaryByDepartment(department);
-    }
-
-    @GetMapping(path = "/departments/min-salary")
-    public Employee findEmployeeWithMinimalSalaryByDepartment(@RequestParam("departmentId") int department) {
-        return employeeService.findMinimalSalaryByDepartment(department);
-    }
-
-    @GetMapping(path = "/departments/all")
-    public Object findAllEmployeesByDepartment(@RequestParam(value = "departmentId", required = false) Integer department) {
-        if (department != null) {
-            return employeeService.getAllEmployeesByDepartment(department);
-        } else {
-            return employeeService.getAllEmployees().stream()
-                    .collect(Collectors.groupingBy(Employee::getDepartment));
-        }
     }
 }
