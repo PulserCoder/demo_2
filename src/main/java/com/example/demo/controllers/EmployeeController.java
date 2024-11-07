@@ -1,14 +1,12 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
-import org.apache.commons.lang3.StringUtils;
+import com.example.demo.models.Employee;
+import com.example.demo.services.EmployeeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/employee")

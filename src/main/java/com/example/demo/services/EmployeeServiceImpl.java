@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.services;
 
+import com.example.demo.models.Employee;
 import com.example.demo.exceptions.EmployeeAlreadyAddedException;
 import com.example.demo.exceptions.EmployeeNotFoundException;
 import com.example.demo.exceptions.EmployeeStorageIsFullException;
@@ -43,50 +44,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-    @Override
-    public Employee findMinimalSalaryByDepartment(int department) {
-        return employees.stream()
-                .filter(e -> e.getDepartment() == department)
-                .min(Comparator.comparingInt(e -> e.getSalary()))
-                .orElse(null);
-    }
-
-    @Override
-    public Employee findMaximalSalaryByDepartment(int department) {
-        return employees.stream()
-                .filter(e -> e.getDepartment() == department)
-                .max(Comparator.comparingInt(e -> e.getSalary()))
-                .orElse(null);
-    }
-
-    @Override
-    public int getQuantityEmployeesByDepartment(int department) {
-        return (int) employees.stream()
-                .filter(e -> e.getDepartment() == department)
-                .count();
-    }
-
-    @Override
-    public int countAllSalariesByDepartment(int department) {
-        return employees.stream().mapToInt(e -> e.getSalary()).sum();
-    }
-
-    @Override
-    public int getAverageSalaryByDepartment(int department) {
-        return countAllSalariesByDepartment(department) / getQuantityEmployeesByDepartment(department);
-    }
-
 
     @Override
     public Employee addEmployee(String firstName, String lastName,
                                 int salary, int department) {
         if (employees.size() >= maxEmployees) {
-            log.warn("какое-то говно");
             throw new EmployeeStorageIsFullException("Превышен лимит по сотрудникам");
         }
         try {
             getEmployeeByFullName(firstName + " " + lastName);
-            log.warn("какое-то говно");
             throw new EmployeeAlreadyAddedException("Такой сотрудник уже добавлен");
         } catch (EmployeeNotFoundException e) {
             Employee newEmployee = new Employee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, department);
@@ -113,14 +79,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployeesByDepartment(int department) {
-        return employees.stream().filter(e -> e.getDepartment() == department).collect(Collectors.toList());
-    }
-
-    @Override
     public Map<Integer, List<Employee>> getAllEmployees() {
         return employees.stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));
+    }
+
+    @Override
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
 }

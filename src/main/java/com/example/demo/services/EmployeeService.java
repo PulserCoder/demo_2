@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.services;
 
+import com.example.demo.models.Employee;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,24 +24,14 @@ public interface EmployeeService {
 
     int getAverageSalary();
 
-    Employee findMinimalSalaryByDepartment(int department);
-
-    Employee findMaximalSalaryByDepartment(int department);
-
-    int getQuantityEmployeesByDepartment(int department);
-
-    int countAllSalariesByDepartment(int department);
-
-    int getAverageSalaryByDepartment(int department);
+    Employee getEmployeeByFullName(String fullName);
 
     Employee addEmployee(String firstName, String lastName,
                          int salary, int department);
 
     Optional<Employee> deleteEmployee(String fullName);
 
-    Employee getEmployeeByFullName(String fullName);
-
-    List<Employee> getAllEmployeesByDepartment(int department);
-
     Map<Integer, List<Employee>> getAllEmployees();
+
+    List<Employee> getEmployees();
 }

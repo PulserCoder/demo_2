@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.models;
 
 public class Employee {
     private int salary;
