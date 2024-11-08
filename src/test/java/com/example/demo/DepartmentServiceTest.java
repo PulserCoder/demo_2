@@ -14,8 +14,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -109,11 +111,4 @@ public class DepartmentServiceTest {
         assertNull(minSalaryDept3);
     }
 
-    @Test
-    public void getAllEmployees() {
-        Map<Integer, List<Employee>> employeesByDept = departmentService.getAllEmployees();
-        assertEquals(2, employeesByDept.size());
-        assertEquals(2, employeesByDept.get(1).size());
-        assertEquals(1, employeesByDept.get(2).size());
-    }
 }

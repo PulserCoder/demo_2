@@ -26,7 +26,9 @@ public class DepartmentService {
     }
 
     public int countAllSalariesByDepartment(int department) {
-        return employeeService.getEmployees().stream().mapToInt(e -> e.getSalary()).sum();
+        return employeeService.getEmployees().stream()
+                .filter(value -> value.getDepartment() == department)
+                .mapToInt(e -> e.getSalary()).sum();
     }
 
     public int getQuantityEmployeesByDepartment(int department) {
