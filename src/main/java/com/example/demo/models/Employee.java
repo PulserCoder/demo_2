@@ -1,14 +1,39 @@
-package com.example.demo;
+package com.example.demo.models;
 
 public class Employee {
+    private int salary;
+    private int department;
     private String firstName;
     private String lastName;
     private String fullName;
 
-    public Employee(String firstName, String lastName) {
+    public Employee(String firstName, String lastName, int salary, int department) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = firstName + " " + lastName;
+        this.salary = salary;
+        this.department = department;
+
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public int getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(int department) {
+        this.department = department;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getFirstName() {
@@ -50,7 +75,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return  "\nFull Name: " + getFullName();
+        return "\nFull Name: " + getFullName();
     }
 
 
